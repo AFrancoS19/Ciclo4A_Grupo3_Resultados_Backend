@@ -1,5 +1,5 @@
 from Modelos import Estudiante
-
+from Modelos import Mesa
 
 class ControladorAdmMesas():
     def __init__(self):
@@ -14,7 +14,7 @@ class ControladorAdmMesas():
         print("Crear una mesa")
         mesa = Mesa(infoMesa)
         return mesa.__dict__
-'''
+
     def show(self,id):
         print("Mostrando un estudiante con id ", id)
         elEstudiante = {
@@ -33,5 +33,3 @@ class ControladorAdmMesas():
     def delete(self,id):
         print("Elimiando estudiante con id ", id)
         return {"deleted_count": 1}
-
-'''
