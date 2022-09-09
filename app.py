@@ -5,7 +5,7 @@ from waitress import serve
 from db import db
 from Routes.Mesa import mesa
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+#from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhos
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 SQLAlchemy(app)
 
-migrate = Migrate(app,db)
+#migrate = Migrate(app,db)
 
 app.register_blueprint(mesa)
 
