@@ -1,4 +1,5 @@
-from Modelos import Estudiante
+from Modelos.Mesa import Mesa
+from db import db
 
 
 class ControladorAdmMesas():
@@ -6,32 +7,44 @@ class ControladorAdmMesas():
         print("Creando ControladorAdmMesas")
 
     def index(self):
-        print("Listar todas las mesas: ")
         resultado = Mesa.query.all()
-        return [resultado]
+        lista=[]
+        for i in resultado:
+            lista.append(i.res())
+        return lista
 
     def create(self,infoMesa):
-        print("Crear una mesa")
-        mesa = Mesa(infoMesa)
-        return mesa.__dict__
-'''
-    def show(self,id):
-        print("Mostrando un estudiante con id ", id)
-        elEstudiante = {
-            "_id": id,
-            "cedula": "123",
-            "nombre": "Juan",
-            "apellido": "Perez"
-        }
-        return elEstudiante
+        n = infoMesa['n_mesa']
+        cant = infoMesa['cant_inscritos']
+        mesa = Mesa(n_mesa=n, cant_inscritos=cant)
+        db.session.add(mesa)
+        db.session.commit()
+        print("Mesa creada correctamente")
+        return {"mensaje": "Mesa creada correctamente"}
 
-    def update(self,id,infoEstudiante):
-        print("Actualizando estudiante con id ", id)
-        elEstudiante = Estudiante(infoEstudiante)
-        return elEstudiante.__dict__
+    def show(self, id):
+        resultado = Mesa.query.get(id)
+        print (resultado)
+        return resultado.res()
 
     def delete(self,id):
-        print("Elimiando estudiante con id ", id)
-        return {"deleted_count": 1}
+        resultado=Mesa.query.get(id)
+        db.session.delete(resultado)
+        db.session.commit()
+        print("Mesa "+ id+" eliminada")
+        return {"mensaje": "Mesa eliminada correctamente"}
 
-'''
+    def update(self,id,infoMesa):
+        n = infoMesa.get('n_mesa')
+        cant = infoMesa.get('cant_inscritos')
+        resultado = Mesa.query.get(id)
+        resultado.n_mesa = n
+        resultado.cant_inscritos = cant
+        db.session.add(resultado)
+        db.session.commit()
+        print (resultado)
+        print("Mesa "+ id+" actualizada")
+        return {"mensaje": "Mesa actualizada correctamente"}
+
+
+
