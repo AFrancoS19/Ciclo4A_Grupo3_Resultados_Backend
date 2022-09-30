@@ -60,3 +60,5 @@ def delete(id):
         return "Se ha eliminado el partido correctamente", 200
     except ObjectNotFound as e:
         return str(e), 404
+    except RelatedExistingInformation as e:
+        return str(e), 409

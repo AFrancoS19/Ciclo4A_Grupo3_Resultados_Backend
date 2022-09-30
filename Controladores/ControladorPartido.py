@@ -1,3 +1,4 @@
+from Modelos.Candidato import Candidato
 from Modelos.Partido import Partido
 from db import db
 from Controladores.CustomExceptions import *
@@ -58,6 +59,10 @@ class ControladorPartido:
         resultado = Partido.query.get(id)
         if resultado is None:
             raise ObjectNotFound("No existe un partido con el id suministrado")
+        listaResultados = Candidato.query.filter_by(partido_id=resultado.id).first()
+        if listaResultados is not None:
+            raise RelatedExistingInformation(
+                "No es posible eliminar el partido dado que existen candidatos asignados a esta.\nElimine los candidatos antes de proceder")
         db.session.delete(resultado)
         db.session.commit()
 

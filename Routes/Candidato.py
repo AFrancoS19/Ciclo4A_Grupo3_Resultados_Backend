@@ -62,3 +62,5 @@ def delete(id):
         return "Se ha eliminado el candidato correctamente", 200
     except ObjectNotFound as e:
         return str(e), 404
+    except RelatedExistingInformation as e:
+        return str(e), 409

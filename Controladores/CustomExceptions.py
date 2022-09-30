@@ -30,3 +30,7 @@ class IncorrectCreationAttributes(Exception):
 class IncorrectValue(Exception):
     """El valos ingresado para uno de los atributos no se encuentra dentro de los parametros aceptados"""
     pass
+
+class RelatedExistingInformation(Exception):
+    """En caso de que se cuenta con alguna relacion existente que impida la eliminacion"""
+    pass

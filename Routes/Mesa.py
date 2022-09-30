@@ -2,6 +2,7 @@ from flask import jsonify, Blueprint, request
 from Controladores.ControladorMesa import ControladorMesa
 from Controladores.CustomExceptions import *
 
+
 controlador = ControladorMesa()
 
 mesa = Blueprint('mesa', __name__)
@@ -52,6 +53,7 @@ def modify():
     except IncorrectCreationAttributes as e:
         return str(e), 400
 
+
 @mesa.route("/mesas/<id>", methods=['DELETE'])
 def delete(id):
     try:
@@ -59,3 +61,5 @@ def delete(id):
         return "Se ha eliminado la mesa correctamente", 200
     except ObjectNotFound as e:
         return str(e), 404
+    except RelatedExistingInformation as e:
+        return str(e), 409

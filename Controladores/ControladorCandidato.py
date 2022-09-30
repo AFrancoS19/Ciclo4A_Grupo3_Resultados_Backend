@@ -3,7 +3,7 @@ from Controladores.ControladorPartido import ControladorPartido
 from db import db
 from Controladores.CustomExceptions import *
 from Controladores.APIValidations import *
-
+from Modelos.ResultadoCandidato import ResultadoCandidato
 
 class ControladorCandidato:
     def __init__(self):
@@ -64,6 +64,11 @@ class ControladorCandidato:
         resultado = Candidato.query.get(id)
         if resultado is None:
             raise ObjectNotFound("No existe un candidato con el id suministrado")
+
+        listaResultados = ResultadoCandidato.query.filter_by(candidato_id=resultado.id).first()
+        if listaResultados is not None:
+            raise RelatedExistingInformation("No es posible eliminar al candidato dado que existen resultados asignados a este.\nElimine los resultados antes de proceder")
+
         db.session.delete(resultado)
         db.session.commit()
 

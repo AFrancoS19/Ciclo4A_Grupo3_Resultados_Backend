@@ -2,6 +2,7 @@ from Modelos.Mesa import Mesa
 from db import db
 from Controladores.CustomExceptions import *
 from Controladores.APIValidations import *
+from Modelos.ResultadoCandidato import ResultadoCandidato
 
 
 class ControladorMesa:
@@ -57,6 +58,11 @@ class ControladorMesa:
         resultado = Mesa.query.get(id)
         if resultado is None:
             raise ObjectNotFound("No existe una mesa con el id suministrado")
+
+        listaResultados = ResultadoCandidato.query.filter_by(mesa_id=resultado.id).first()
+        if listaResultados is not None:
+            raise RelatedExistingInformation("No es posible eliminar la mesa dado que existen resultados asignados a esta.\nElimine los resultados antes de proceder")
+
         db.session.delete(resultado)
         db.session.commit()
 
