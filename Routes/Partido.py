@@ -14,16 +14,16 @@ def create():
         controlador.create(data)
         return "El objeto fue creado correctamente", 201
     except ObjectAlreadyDefined as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @partido.route("/partidos", methods=['GET'])
 def listar():
-    return jsonify(controlador.list())
+    return jsonify(controlador.list()), 200
 
 
 @partido.route("/partidos/<id>", methods=['GET'])
@@ -32,7 +32,7 @@ def get(id):
         partido = controlador.get(id)
         return jsonify(partido), 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
 
 
 @partido.route("/partidos", methods=['PUT'])
@@ -42,15 +42,15 @@ def modify():
         controlador.modify(data)
         return "Se ha modificado el partido correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except DuplicateConstrainedValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except AttributeError as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @partido.route("/partidos/<id>", methods=['DELETE'])
@@ -59,6 +59,6 @@ def delete(id):
         controlador.delete(id)
         return "Se ha eliminado el partido correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except RelatedExistingInformation as e:
-        return str(e), 409
+        return jsonify({"msg": str(e)}), 409

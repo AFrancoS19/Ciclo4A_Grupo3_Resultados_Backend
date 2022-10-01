@@ -15,16 +15,16 @@ def create():
         controlador.create(data)
         return "El objeto fue creado correctamente", 201
     except ObjectAlreadyDefined as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @mesa.route("/mesas", methods=['GET'])
 def listar():
-    return jsonify(controlador.list())
+    return jsonify(controlador.list()), 200
 
 
 @mesa.route("/mesas/<id>", methods=['GET'])
@@ -33,7 +33,7 @@ def get(id):
         mesa = controlador.get(id)
         return jsonify(mesa), 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
 
 
 @mesa.route("/mesas", methods=['PUT'])
@@ -43,15 +43,15 @@ def modify():
         controlador.modify(data)
         return "Se ha modificado la mesa correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except DuplicateConstrainedValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except AttributeError as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @mesa.route("/mesas/<id>", methods=['DELETE'])
@@ -60,6 +60,6 @@ def delete(id):
         controlador.delete(id)
         return "Se ha eliminado la mesa correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except RelatedExistingInformation as e:
-        return str(e), 409
+        return jsonify({"msg": str(e)}), 409

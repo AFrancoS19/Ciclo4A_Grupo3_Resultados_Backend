@@ -14,18 +14,18 @@ def create():
         controlador.create(data)
         return "El objeto fue creado correctamente", 201
     except ObjectAlreadyDefined as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @candidato.route("/candidatos", methods=['GET'])
 def listar():
-    return jsonify(controlador.list())
+    return jsonify(controlador.list()), 200
 
 
 @candidato.route("/candidatos/<id>", methods=['GET'])
@@ -34,7 +34,7 @@ def get(id):
         candidato = controlador.get(id)
         return jsonify(candidato), 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
 
 
 @candidato.route("/candidatos", methods=['PUT'])
@@ -44,15 +44,15 @@ def modify():
         controlador.modify(data)
         return "Se ha modificado el candidato correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except DuplicateConstrainedValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except AttributeError as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectCreationAttributes as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
     except IncorrectValue as e:
-        return str(e), 400
+        return jsonify({"msg": str(e)}), 400
 
 
 @candidato.route("/candidatos/<id>", methods=['DELETE'])
@@ -61,6 +61,6 @@ def delete(id):
         controlador.delete(id)
         return "Se ha eliminado el candidato correctamente", 200
     except ObjectNotFound as e:
-        return str(e), 404
+        return jsonify({"msg": str(e)}), 404
     except RelatedExistingInformation as e:
-        return str(e), 409
+        return jsonify({"msg": str(e)}), 409
