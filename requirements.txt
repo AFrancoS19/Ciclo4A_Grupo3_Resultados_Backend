@@ -11,4 +11,4 @@ zipp==3.8.1
 Flask-SQLAlchemy==2.5.1
 psycopg2==2.9.3
 psycopg2-binary==2.9.3
-gunicorn
+gunicorn==20.1.0
